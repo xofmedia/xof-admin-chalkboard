@@ -38,23 +38,23 @@ That simple notice widget evolved into this modular plugin. Built first to solve
 
 ## Screenshots
 
-![Snippet Creation and Color Picker](assets/screenshot-1.png)
+![Full Dashboard View](assets/screenshot-1.png)
+*A full overview of the dashboard widget in action, featuring the creation section, global import/export tools, and a stacked library of snippets.*
+
+![Snippet Creation and Color Picker](assets/screenshot-2.png)
 *The main XOF Chalkboard dashboard widget UI, highlighting the snippet creation tools and color picker.*
 
-![JavaScript Snippet](assets/screenshot-2.png)
+![JavaScript Snippet](assets/screenshot-3.png)
 *An expanded JavaScript snippet demonstrating the action icons, drag-and-drop handle, and resizable workspace, with a collapsed CSS snippet stacked below.*
 
-![URL Snippet](assets/screenshot-3.png)
+![URL Snippet](assets/screenshot-4.png)
 *Saving a URL for quick access. The expanded view reveals the snippet title, action controls, and adjustable text area.*
 
-![Shortcode Snippet](assets/screenshot-4.png)
+![Shortcode Snippet](assets/screenshot-5.png)
 *Storing a frequently used WordPress shortcode. You can easily copy it to your clipboard directly from this expanded view.*
 
-![Collapsed View](assets/screenshot-5.png)
+![Collapsed View](assets/screenshot-6.png)
 *A clean, collapsed view of multiple saved snippets, showcasing the color-coding and compact accordion UI.*
-
-![Full Dashboard View](assets/screenshot-6.png)
-*A full overview of the dashboard widget in action, featuring the creation section, global import/export tools, and a stacked library of snippets.*
 
 ## Installation
 

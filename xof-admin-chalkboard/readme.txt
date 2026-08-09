@@ -60,12 +60,12 @@ Click the "Screen Options" tab at the top right of your WordPress dashboard and 
 
 == Screenshots ==
 
-1. The main XOF Chalkboard dashboard widget UI, highlighting the snippet creation tools and color picker.
-2. An expanded JavaScript snippet demonstrating the action icons, drag-and-drop handle, and resizable workspace, with a collapsed CSS snippet stacked below.
-3. Saving a URL for quick access. The expanded view reveals the snippet title, action controls, and adjustable text area.
-4. Storing a frequently used WordPress shortcode. You can easily copy it to your clipboard directly from this expanded view.
-5. A clean, collapsed view of multiple saved snippets, showcasing the color-coding and compact accordion UI.
-6. A full overview of the dashboard widget in action, featuring the creation section, global import/export tools, and a stacked library of snippets.
+1. A full overview of the dashboard widget in action, featuring the creation section, global import/export tools, and a stacked library of snippets.
+2. The main XOF Chalkboard dashboard widget UI, highlighting the snippet creation tools and color picker.
+3. An expanded JavaScript snippet demonstrating the action icons, drag-and-drop handle, and resizable workspace, with a collapsed CSS snippet stacked below.
+4. Saving a URL for quick access. The expanded view reveals the snippet title, action controls, and adjustable text area.
+5. Storing a frequently used WordPress shortcode. You can easily copy it to your clipboard directly from this expanded view.
+6. A clean, collapsed view of multiple saved snippets, showcasing the color-coding and compact accordion UI.
 
 == Changelog ==
 
