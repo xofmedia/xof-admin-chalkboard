@@ -6,7 +6,7 @@ Tested up to: 7.0
 Stable tag: 1.0.0
 Requires PHP: 7.4
 License: GPLv3 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 A lightweight, drag-and-drop chalkboard admin dashboard widget for WordPress storing your most used code snippets, urls, shortcodes, and raw text.
 
