@@ -3,8 +3,9 @@
  * 
  * @package   XOF_Admin_Chalkboard
  * @author    XOF Media
+ * @copyright  2026 XOF Media
  * @license   GPL-3.0+
- * @link      https://xofmedia.com
+ * @link      https://xofmedia.com/wordpress-plugins/xof-admin-chalkboard-widget-free/
  * @version   1.0.0
  */
 
