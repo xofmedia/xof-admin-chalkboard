@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: XOF Admin Chalkboard
- * Plugin URI:  https://xofmedia.com
+ * Plugin URI:  https://xofmedia.com/wordpress-plugins/xof-admin-chalkboard-widget-free/
  * Description: A helpful chalkboard dashboard widget for admin notes and snippets.
  * Version:     1.0.0
  * Author:      XOF Media
@@ -9,6 +9,13 @@
  * License:     GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: xof-admin-chalkboard
+ * 
+ * Copyright 2026 XOF Media
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
  */
 
 // Exit if accessed directly to prevent unauthorized code execution.
