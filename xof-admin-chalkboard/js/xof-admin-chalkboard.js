@@ -3,21 +3,20 @@
  * 
  * @package   XOF_Admin_Chalkboard
  * @author    XOF Media
- * @copyright  2026 XOF Media
  * @license   GPL-3.0+
- * @link      https://xofmedia.com/wordpress-plugins/xof-admin-chalkboard-widget-free/
+ * @link      https://xofmedia.com
  * @version   1.0.0
  */
 
 jQuery(document).ready(function($) {
 
-    const $titleInput = $('#xof-chalkboard-title-input');
-    const $input = $('#xof-chalkboard-input');
-    const $addButton = $('#xof-chalkboard-add');
-    const $spinner = $('#xof-chalkboard-spinner');
-    const $colorInput = $('#xof-chalkboard-color-input');
-    const $createContainer = $('#xof-create-container');
-    const $list = $('#xof-chalkboard-list');
+    const $titleInput = $('#xofac-chalkboard-title-input');
+    const $input = $('#xofac-chalkboard-input');
+    const $addButton = $('#xofac-chalkboard-add');
+    const $spinner = $('#xofac-chalkboard-spinner');
+    const $colorInput = $('#xofac-chalkboard-color-input');
+    const $createContainer = $('#xofac-create-container');
+    const $list = $('#xofac-chalkboard-list');
 
     // ============================================
     // Handle creating and prepending a new snippet
@@ -34,9 +33,9 @@ jQuery(document).ready(function($) {
         $spinner.addClass('is-active');
         $addButton.prop('disabled', true);
 
-        $.post(xofChalkboard.ajax_url, {
-            action: 'xof_add_snippet',
-            nonce: xofChalkboard.nonce,
+        $.post(xofacChalkboard.ajax_url, {
+            action: 'xofac_add_snippet',
+            nonce: xofacChalkboard.nonce,
             title: titleValue,
             text: textValue,
             color: colorValue
@@ -51,57 +50,57 @@ jQuery(document).ready(function($) {
                 $createContainer.css('background-color', 'transparent');
                 
                 const newListItem = `
-                    <li class="xof-chalkboard-item" data-id="${response.data.id}" style="background-color: ${response.data.color};">
-                        <div class="xof-snippet-body">
-                            <div class="xof-snippet-title-wrapper">
-                                <div class="xof-snippet-title-bar">
-                                    <div class="xof-title-toggle-wrap" title="Click to Expand/Collapse">
-                                        <span class="xof-accordion-toggle"></span>
-                                        <span class="xof-title-text" style="color: #ffffff;">${response.data.title_html}</span>
+                    <li class="xofac-chalkboard-item" data-id="${response.data.id}" style="background-color: ${response.data.color};">
+                        <div class="xofac-snippet-body">
+                            <div class="xofac-snippet-title-wrapper">
+                                <div class="xofac-snippet-title-bar">
+                                    <div class="xofac-title-toggle-wrap" title="Click to Expand/Collapse">
+                                        <span class="xofac-accordion-toggle"></span>
+                                        <span class="xofac-title-text" style="color: #ffffff;">${response.data.title_html}</span>
                                     </div>
-                                    <img src="${xofChalkboard.plugin_url}images/xof_chalkboard-title-edit-button_64x.png" class="xof-title-edit-icon" title="${xofChalkboard.i18n.editTitle}" alt="${xofChalkboard.i18n.editTitle}" />
+                                    <img src="${xofacChalkboard.plugin_url}images/xofac_chalkboard-title-edit-button_64x.png" class="xofac-title-edit-icon" title="${xofacChalkboard.i18n.editTitle}" alt="${xofacChalkboard.i18n.editTitle}" />
                                 </div>
-                                <div class="xof-snippet-title-edit-container" style="display:none;">
-                                    <input type="text" class="xof-snippet-title-edit-input" value="${response.data.title_raw}" />
-                                    <button type="button" class="button button-small xof-title-save">${xofChalkboard.i18n.save}</button>
+                                <div class="xofac-snippet-title-edit-container" style="display:none;">
+                                    <input type="text" class="xofac-snippet-title-edit-input" value="${response.data.title_raw}" />
+                                    <button type="button" class="button button-small xofac-title-save">${xofacChalkboard.i18n.save}</button>
                                 </div>
                             </div>
                             
-                            <div class="xof-snippet-collapse-wrap">
-                                <div class="xof-snippet-actions-horizontal">
-                                    <img src="${xofChalkboard.plugin_url}images/xof_chalkboard-copy-button_64x.png" class="xof-action-icon xof-chalkboard-copy" title="${xofChalkboard.i18n.copySnippet}" alt="${xofChalkboard.i18n.copySnippet}" />
-                                    <img src="${xofChalkboard.plugin_url}images/xof_chalkboard-edit2-button_64x.png" class="xof-action-icon xof-chalkboard-edit" title="${xofChalkboard.i18n.editSnippet}" alt="${xofChalkboard.i18n.editSnippet}" />
+                            <div class="xofac-snippet-collapse-wrap">
+                                <div class="xofac-snippet-actions-horizontal">
+                                    <img src="${xofacChalkboard.plugin_url}images/xofac_chalkboard-copy-button_64x.png" class="xofac-action-icon xofac-chalkboard-copy" title="${xofacChalkboard.i18n.copySnippet}" alt="${xofacChalkboard.i18n.copySnippet}" />
+                                    <img src="${xofacChalkboard.plugin_url}images/xofac_chalkboard-edit2-button_64x.png" class="xofac-action-icon xofac-chalkboard-edit" title="${xofacChalkboard.i18n.editSnippet}" alt="${xofacChalkboard.i18n.editSnippet}" />
                                 </div>
-                                <div class="xof-snippet-content">${response.data.html}</div>
-                                <textarea class="xof-snippet-edit-input" style="display:none;">${response.data.raw}</textarea>
-                                <div class="xof-snippet-save-wrap" style="display:none;">
-                                    <button type="button" class="button button-primary button-small xof-chalkboard-save">${xofChalkboard.i18n.saveSnippet}</button>
+                                <div class="xofac-snippet-content">${response.data.html}</div>
+                                <textarea class="xofac-snippet-edit-input" style="display:none;">${response.data.raw}</textarea>
+                                <div class="xofac-snippet-save-wrap" style="display:none;">
+                                    <button type="button" class="button button-primary button-small xofac-chalkboard-save">${xofacChalkboard.i18n.saveSnippet}</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="xof-snippet-order-controls">
-                            <div class="xof-order-controls-top">
-                                <div class="xof-standard-order-icons">
-                                    <img src="${xofChalkboard.plugin_url}images/xof_chalkboard-close2-button_64x.png" class="xof-order-icon xof-chalkboard-delete" title="${xofChalkboard.i18n.deleteSnippet}" alt="${xofChalkboard.i18n.deleteSnippet}" />
-                                    <img src="${xofChalkboard.plugin_url}images/xof_chalkboard-drag-button_64x.png" class="xof-order-icon xof-drag-handle" title="${xofChalkboard.i18n.dragToReorder}" alt="${xofChalkboard.i18n.dragToReorder}" />
+                        <div class="xofac-snippet-order-controls">
+                            <div class="xofac-order-controls-top">
+                                <div class="xofac-standard-order-icons">
+                                    <img src="${xofacChalkboard.plugin_url}images/xofac_chalkboard-close2-button_64x.png" class="xofac-order-icon xofac-chalkboard-delete" title="${xofacChalkboard.i18n.deleteSnippet}" alt="${xofacChalkboard.i18n.deleteSnippet}" />
+                                    <img src="${xofacChalkboard.plugin_url}images/xofac_chalkboard-drag-button_64x.png" class="xofac-order-icon xofac-drag-handle" title="${xofacChalkboard.i18n.dragToReorder}" alt="${xofacChalkboard.i18n.dragToReorder}" />
                                 </div>
-                                <div class="xof-delete-confirm-tooltip" style="display:none;">
-                                    <span>${xofChalkboard.i18n.deleteConfirm}</span>
-                                    <button type="button" class="button button-small xof-confirm-delete-yes">${xofChalkboard.i18n.yes}</button>
-                                    <button type="button" class="button button-small xof-confirm-delete-no">${xofChalkboard.i18n.no}</button>
+                                <div class="xofac-delete-confirm-tooltip" style="display:none;">
+                                    <span>${xofacChalkboard.i18n.deleteConfirm}</span>
+                                    <button type="button" class="button button-small xofac-confirm-delete-yes">${xofacChalkboard.i18n.yes}</button>
+                                    <button type="button" class="button button-small xofac-confirm-delete-no">${xofacChalkboard.i18n.no}</button>
                                 </div>
                             </div>
-                            <div class="xof-color-picker-container xof-edit-color-picker" style="display:none;">
-                                <input type="hidden" class="xof-snippet-color-edit-input" value="${response.data.color}" />
-                                <img src="${xofChalkboard.plugin_url}images/xof_chalkboard-rainbow-button_64x.png" class="xof-action-icon xof-rainbow-btn" title="${xofChalkboard.i18n.chooseColor}" alt="${xofChalkboard.i18n.chooseColor}" />
-                                <div class="xof-color-bar" style="display:none;">
-                                    <div class="xof-color-swatch" data-color="#fcfcfc" style="background-color: #e0e0e0;" title="${xofChalkboard.i18n.colorDefault}"></div>
-                                    <div class="xof-color-swatch" data-color="#ffe5e5" style="background-color: #ff9999;" title="${xofChalkboard.i18n.colorLightRed}"></div>
-                                    <div class="xof-color-swatch" data-color="#ffebd6" style="background-color: #ffb366;" title="${xofChalkboard.i18n.colorLightOrange}"></div>
-                                    <div class="xof-color-swatch" data-color="#fffae6" style="background-color: #ffe680;" title="${xofChalkboard.i18n.colorLightYellow}"></div>
-                                    <div class="xof-color-swatch" data-color="#e8f5e9" style="background-color: #99cc99;" title="${xofChalkboard.i18n.colorLightGreen}"></div>
-                                    <div class="xof-color-swatch" data-color="#e3f2fd" style="background-color: #99c2ff;" title="${xofChalkboard.i18n.colorLightBlue}"></div>
-                                    <div class="xof-color-swatch" data-color="#f3e5f5" style="background-color: #cc99ff;" title="${xofChalkboard.i18n.colorLightPurple}"></div>
+                            <div class="xofac-color-picker-container xofac-edit-color-picker" style="display:none;">
+                                <input type="hidden" class="xofac-snippet-color-edit-input" value="${response.data.color}" />
+                                <img src="${xofacChalkboard.plugin_url}images/xofac_chalkboard-rainbow-button_64x.png" class="xofac-action-icon xofac-rainbow-btn" title="${xofacChalkboard.i18n.chooseColor}" alt="${xofacChalkboard.i18n.chooseColor}" />
+                                <div class="xofac-color-bar" style="display:none;">
+                                    <div class="xofac-color-swatch" data-color="#fcfcfc" style="background-color: #e0e0e0;" title="${xofacChalkboard.i18n.colorDefault}"></div>
+                                    <div class="xofac-color-swatch" data-color="#ffe5e5" style="background-color: #ff9999;" title="${xofacChalkboard.i18n.colorLightRed}"></div>
+                                    <div class="xofac-color-swatch" data-color="#ffebd6" style="background-color: #ffb366;" title="${xofacChalkboard.i18n.colorLightOrange}"></div>
+                                    <div class="xofac-color-swatch" data-color="#fffae6" style="background-color: #ffe680;" title="${xofacChalkboard.i18n.colorLightYellow}"></div>
+                                    <div class="xofac-color-swatch" data-color="#e8f5e9" style="background-color: #99cc99;" title="${xofacChalkboard.i18n.colorLightGreen}"></div>
+                                    <div class="xofac-color-swatch" data-color="#e3f2fd" style="background-color: #99c2ff;" title="${xofacChalkboard.i18n.colorLightBlue}"></div>
+                                    <div class="xofac-color-swatch" data-color="#f3e5f5" style="background-color: #cc99ff;" title="${xofacChalkboard.i18n.colorLightPurple}"></div>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +109,7 @@ jQuery(document).ready(function($) {
                 
                 $list.prepend(newListItem);
             } else {
-                alert(xofChalkboard.i18n.errorAdding + response.data);
+                alert(xofacChalkboard.i18n.errorAdding + response.data);
             }
         });
     });
@@ -118,33 +117,33 @@ jQuery(document).ready(function($) {
     // ===================================
     // Handle deletion UI and confirmation
     // ===================================
-    $list.on('click', '.xof-chalkboard-delete', function(e) {
+    $list.on('click', '.xofac-chalkboard-delete', function(e) {
         e.preventDefault();
-        const $topControls = $(this).closest('.xof-order-controls-top');
+        const $topControls = $(this).closest('.xofac-order-controls-top');
         
-        $topControls.find('.xof-standard-order-icons').hide();
-        $topControls.find('.xof-delete-confirm-tooltip').show();
+        $topControls.find('.xofac-standard-order-icons').hide();
+        $topControls.find('.xofac-delete-confirm-tooltip').show();
     });
 
-    $list.on('click', '.xof-confirm-delete-no', function(e) {
+    $list.on('click', '.xofac-confirm-delete-no', function(e) {
         e.preventDefault();
-        const $topControls = $(this).closest('.xof-order-controls-top');
+        const $topControls = $(this).closest('.xofac-order-controls-top');
         
-        $topControls.find('.xof-delete-confirm-tooltip').hide();
-        $topControls.find('.xof-standard-order-icons').show();
+        $topControls.find('.xofac-delete-confirm-tooltip').hide();
+        $topControls.find('.xofac-standard-order-icons').show();
     });
 
-    $list.on('click', '.xof-confirm-delete-yes', function(e) {
+    $list.on('click', '.xofac-confirm-delete-yes', function(e) {
         e.preventDefault();
         
-        const $listItem = $(this).closest('.xof-chalkboard-item');
+        const $listItem = $(this).closest('.xofac-chalkboard-item');
         const snippetId = $listItem.data('id');
         
         $listItem.css('opacity', '0.5');
 
-        $.post(xofChalkboard.ajax_url, {
-            action: 'xof_delete_snippet',
-            nonce: xofChalkboard.nonce,
+        $.post(xofacChalkboard.ajax_url, {
+            action: 'xofac_delete_snippet',
+            nonce: xofacChalkboard.nonce,
             snippet_id: snippetId
         }, function(response) {
             if (response.success) {
@@ -153,11 +152,11 @@ jQuery(document).ready(function($) {
                 });
             } else {
                 $listItem.css('opacity', '1');
-                alert(xofChalkboard.i18n.errorDeleting);
+                alert(xofacChalkboard.i18n.errorDeleting);
                 
-                const $topControls = $listItem.find('.xof-order-controls-top');
-                $topControls.find('.xof-delete-confirm-tooltip').hide();
-                $topControls.find('.xof-standard-order-icons').show();
+                const $topControls = $listItem.find('.xofac-order-controls-top');
+                $topControls.find('.xofac-delete-confirm-tooltip').hide();
+                $topControls.find('.xofac-standard-order-icons').show();
             }
         });
     });
@@ -165,52 +164,52 @@ jQuery(document).ready(function($) {
     // =============================================
     // Handle accordion expand and collapse behavior
     // =============================================
-    $list.on('click', '.xof-title-toggle-wrap', function(e) {
+    $list.on('click', '.xofac-title-toggle-wrap', function(e) {
         e.preventDefault();
-        const $item = $(this).closest('.xof-chalkboard-item');
-        const $collapseWrap = $item.find('.xof-snippet-collapse-wrap');
+        const $item = $(this).closest('.xofac-chalkboard-item');
+        const $collapseWrap = $item.find('.xofac-snippet-collapse-wrap');
         
         $collapseWrap.slideToggle(250, function() {
-            $item.toggleClass('xof-is-collapsed');
+            $item.toggleClass('xofac-is-collapsed');
         });
     });
 
     // =====================================
     // Handle title editing state and saving
     // =====================================
-    $list.on('click', '.xof-title-edit-icon', function(e) {
+    $list.on('click', '.xofac-title-edit-icon', function(e) {
         e.preventDefault();
-        const $listItem = $(this).closest('.xof-chalkboard-item');
+        const $listItem = $(this).closest('.xofac-chalkboard-item');
         
-        $listItem.find('.xof-snippet-title-bar').hide();
-        $listItem.find('.xof-snippet-title-edit-container').css('display', 'flex');
-        $listItem.find('.xof-snippet-title-edit-input').focus();
+        $listItem.find('.xofac-snippet-title-bar').hide();
+        $listItem.find('.xofac-snippet-title-edit-container').css('display', 'flex');
+        $listItem.find('.xofac-snippet-title-edit-input').focus();
     });
 
-    $list.on('click', '.xof-title-save', function(e) {
+    $list.on('click', '.xofac-title-save', function(e) {
         e.preventDefault();
-        const $listItem = $(this).closest('.xof-chalkboard-item');
+        const $listItem = $(this).closest('.xofac-chalkboard-item');
         const snippetId = $listItem.data('id');
-        const newTitle = $listItem.find('.xof-snippet-title-edit-input').val().trim();
-        const existingText = $listItem.find('.xof-snippet-edit-input').val(); 
+        const newTitle = $listItem.find('.xofac-snippet-title-edit-input').val().trim();
+        const existingText = $listItem.find('.xofac-snippet-edit-input').val(); 
         const $saveBtn = $(this);
 
-        $saveBtn.text(xofChalkboard.i18n.saving).prop('disabled', true);
+        $saveBtn.text(xofacChalkboard.i18n.saving).prop('disabled', true);
 
-        $.post(xofChalkboard.ajax_url, {
-            action: 'xof_edit_snippet',
-            nonce: xofChalkboard.nonce,
+        $.post(xofacChalkboard.ajax_url, {
+            action: 'xofac_edit_snippet',
+            nonce: xofacChalkboard.nonce,
             snippet_id: snippetId,
             title: newTitle,
             text: existingText
         }, function(response) {
-            $saveBtn.text(xofChalkboard.i18n.save).prop('disabled', false);
+            $saveBtn.text(xofacChalkboard.i18n.save).prop('disabled', false);
             if (response.success) {
-                $listItem.find('.xof-title-text').html(response.data.title_html);
-                $listItem.find('.xof-snippet-title-edit-container').hide();
-                $listItem.find('.xof-snippet-title-bar').css('display', 'flex');
+                $listItem.find('.xofac-title-text').html(response.data.title_html);
+                $listItem.find('.xofac-snippet-title-edit-container').hide();
+                $listItem.find('.xofac-snippet-title-bar').css('display', 'flex');
             } else {
-                alert(xofChalkboard.i18n.errorSavingTitle);
+                alert(xofacChalkboard.i18n.errorSavingTitle);
             }
         });
     });
@@ -218,54 +217,54 @@ jQuery(document).ready(function($) {
     // ===============================================
     // Handle snippet content editing state and saving
     // ===============================================
-    $list.on('click', '.xof-chalkboard-edit', function(e) {
+    $list.on('click', '.xofac-chalkboard-edit', function(e) {
         e.preventDefault();
-        const $listItem = $(this).closest('.xof-chalkboard-item');
+        const $listItem = $(this).closest('.xofac-chalkboard-item');
         
-        $listItem.find('.xof-snippet-content').hide();
-        $listItem.find('.xof-snippet-edit-input').show().focus();
-        $listItem.find('.xof-snippet-actions-horizontal .xof-action-icon').hide();
-        $listItem.find('.xof-snippet-save-wrap').css('display', 'flex'); 
-        $listItem.find('.xof-edit-color-picker').show();
+        $listItem.find('.xofac-snippet-content').hide();
+        $listItem.find('.xofac-snippet-edit-input').show().focus();
+        $listItem.find('.xofac-snippet-actions-horizontal .xofac-action-icon').hide();
+        $listItem.find('.xofac-snippet-save-wrap').css('display', 'flex'); 
+        $listItem.find('.xofac-edit-color-picker').show();
     });
 
-    $list.on('click', '.xof-chalkboard-save', function(e) {
+    $list.on('click', '.xofac-chalkboard-save', function(e) {
         e.preventDefault();
-        const $listItem = $(this).closest('.xof-chalkboard-item');
+        const $listItem = $(this).closest('.xofac-chalkboard-item');
         const snippetId = $listItem.data('id');
-        const existingTitle = $listItem.find('.xof-snippet-title-edit-input').val();
-        const newText = $listItem.find('.xof-snippet-edit-input').val().trim();
-        const newColor = $listItem.find('.xof-snippet-color-edit-input').val();
+        const existingTitle = $listItem.find('.xofac-snippet-title-edit-input').val();
+        const newText = $listItem.find('.xofac-snippet-edit-input').val().trim();
+        const newColor = $listItem.find('.xofac-snippet-color-edit-input').val();
         const $saveBtn = $(this);
 
         if (newText === '') {
-            alert(xofChalkboard.i18n.emptySnippet);
+            alert(xofacChalkboard.i18n.emptySnippet);
             return;
         }
 
-        $saveBtn.text(xofChalkboard.i18n.saving).prop('disabled', true);
+        $saveBtn.text(xofacChalkboard.i18n.saving).prop('disabled', true);
 
-        $.post(xofChalkboard.ajax_url, {
-            action: 'xof_edit_snippet',
-            nonce: xofChalkboard.nonce,
+        $.post(xofacChalkboard.ajax_url, {
+            action: 'xofac_edit_snippet',
+            nonce: xofacChalkboard.nonce,
             snippet_id: snippetId,
             title: existingTitle,
             text: newText,
             color: newColor
         }, function(response) {
-            $saveBtn.text(xofChalkboard.i18n.saveSnippet).prop('disabled', false);
+            $saveBtn.text(xofacChalkboard.i18n.saveSnippet).prop('disabled', false);
             if (response.success) {
-                $listItem.find('.xof-snippet-content').html(response.data.html).show();
-                $listItem.find('.xof-snippet-edit-input').hide();
+                $listItem.find('.xofac-snippet-content').html(response.data.html).show();
+                $listItem.find('.xofac-snippet-edit-input').hide();
                 $listItem.css('background-color', response.data.color);
                 
                 // Hide the new bottom wrapper instead of just the button
-                $listItem.find('.xof-snippet-save-wrap').hide();
-                $listItem.find('.xof-snippet-actions-horizontal .xof-action-icon').show();
-                $listItem.find('.xof-edit-color-picker').hide(); 
-                $listItem.find('.xof-color-bar').hide(); 
+                $listItem.find('.xofac-snippet-save-wrap').hide();
+                $listItem.find('.xofac-snippet-actions-horizontal .xofac-action-icon').show();
+                $listItem.find('.xofac-edit-color-picker').hide(); 
+                $listItem.find('.xofac-color-bar').hide(); 
             } else {
-                alert(xofChalkboard.i18n.errorSaving);
+                alert(xofacChalkboard.i18n.errorSaving);
             }
         });
     });
@@ -274,23 +273,23 @@ jQuery(document).ready(function($) {
     // Initialize jQuery UI Sortable for drag-and-drop reordering
     // ==========================================================
     $list.sortable({
-        handle: '.xof-drag-handle',
-        placeholder: 'xof-sortable-placeholder',
+        handle: '.xofac-drag-handle',
+        placeholder: 'xofac-sortable-placeholder',
         opacity: 0.8,
         update: function(event, ui) {
             const newOrder = [];
             
-            $list.find('.xof-chalkboard-item').each(function() {
+            $list.find('.xofac-chalkboard-item').each(function() {
                 newOrder.push($(this).data('id'));
             });
 
-            $.post(xofChalkboard.ajax_url, {
-                action: 'xof_reorder_snippet',
-                nonce: xofChalkboard.nonce,
+            $.post(xofacChalkboard.ajax_url, {
+                action: 'xofac_reorder_snippet',
+                nonce: xofacChalkboard.nonce,
                 snippet_ids: newOrder
             }, function(response) {
                 if (!response.success) {
-                    alert(xofChalkboard.i18n.errorReorder);
+                    alert(xofacChalkboard.i18n.errorReorder);
                 }
             });
         }
@@ -299,19 +298,19 @@ jQuery(document).ready(function($) {
     // =====================================
     // Handle clipboard copy API integration
     // =====================================
-    $list.on('click', '.xof-chalkboard-copy', function(e) {
+    $list.on('click', '.xofac-chalkboard-copy', function(e) {
         e.preventDefault();
         
         const $btn = $(this);
-        const $listItem = $btn.closest('.xof-chalkboard-item');
-        const $actionsContainer = $btn.closest('.xof-snippet-actions-horizontal');
+        const $listItem = $btn.closest('.xofac-chalkboard-item');
+        const $actionsContainer = $btn.closest('.xofac-snippet-actions-horizontal');
         
-        const textToCopy = $listItem.find('.xof-snippet-edit-input').val();
+        const textToCopy = $listItem.find('.xofac-snippet-edit-input').val();
 
         navigator.clipboard.writeText(textToCopy).then(function() {
-            $actionsContainer.find('.xof-copied-tooltip').remove();
+            $actionsContainer.find('.xofac-copied-tooltip').remove();
             
-            const $tooltip = $('<div class="xof-copied-tooltip">' + xofChalkboard.i18n.copied + '</div>');
+            const $tooltip = $('<div class="xofac-copied-tooltip">' + xofacChalkboard.i18n.copied + '</div>');
             
             $actionsContainer.append($tooltip);
             $tooltip.fadeIn(200).delay(1500).fadeOut(300, function() {
@@ -320,53 +319,53 @@ jQuery(document).ready(function($) {
             
         }).catch(function(err) {
             console.error('Failed to copy text: ', err);
-            alert(xofChalkboard.i18n.clipboardError);
+            alert(xofacChalkboard.i18n.clipboardError);
         });
     });
 
     // ============================
     // Handle color picker UI state
     // ============================
-    $(document).on('click', '.xof-rainbow-btn', function(e) {
+    $(document).on('click', '.xofac-rainbow-btn', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        $('.xof-color-bar').not($(this).siblings('.xof-color-bar')).hide();
-        $(this).siblings('.xof-color-bar').toggle();
+        $('.xofac-color-bar').not($(this).siblings('.xofac-color-bar')).hide();
+        $(this).siblings('.xofac-color-bar').toggle();
     });
 
-    $(document).on('click', '.xof-color-swatch', function(e) {
+    $(document).on('click', '.xofac-color-swatch', function(e) {
         e.preventDefault();
         e.stopPropagation();
         
         const $swatch = $(this);
         const color = $swatch.data('color');
-        const $container = $swatch.closest('.xof-color-picker-container');
+        const $container = $swatch.closest('.xofac-color-picker-container');
         
         $container.find('input[type="hidden"]').val(color);
-        $swatch.parent('.xof-color-bar').hide();
+        $swatch.parent('.xofac-color-bar').hide();
 
-        if ($container.closest('#xof-create-container').length) {
-            $('#xof-create-container').css('background-color', color);
+        if ($container.closest('#xofac-create-container').length) {
+            $('#xofac-create-container').css('background-color', color);
         } else {
-            $swatch.closest('.xof-chalkboard-item').css('background-color', color);
+            $swatch.closest('.xofac-chalkboard-item').css('background-color', color);
         }
     });
 
     $(document).on('click', function(e) {
-        if (!$(e.target).closest('.xof-color-picker-container').length) {
-            $('.xof-color-bar').hide();
+        if (!$(e.target).closest('.xofac-color-picker-container').length) {
+            $('.xofac-color-bar').hide();
         }
     });
 
     // ========================================
     // Handle exporting snippets to a JSON file
     // ========================================
-    $('#xof-export-btn').on('click', function(e) {
+    $('#xofac-export-btn').on('click', function(e) {
         e.preventDefault();
         
-        $.post(xofChalkboard.ajax_url, {
-            action: 'xof_export_snippets',
-            nonce: xofChalkboard.nonce
+        $.post(xofacChalkboard.ajax_url, {
+            action: 'xofac_export_snippets',
+            nonce: xofacChalkboard.nonce
         }, function(response) {
             if (response.success) {
                 const blob = new Blob([response.data], { type: 'application/json' });
@@ -374,14 +373,14 @@ jQuery(document).ready(function($) {
                 
                 const a = document.createElement('a');
                 a.href = downloadUrl;
-                a.download = 'xof-chalkboard-data.json';
+                a.download = 'xofac-chalkboard-data.json';
                 document.body.appendChild(a);
                 a.click();
                 
                 document.body.removeChild(a);
                 URL.revokeObjectURL(downloadUrl);
             } else {
-                alert(xofChalkboard.i18n.errorExporting);
+                alert(xofacChalkboard.i18n.errorExporting);
             }
         });
     });
@@ -389,15 +388,15 @@ jQuery(document).ready(function($) {
     // ===========================================
     // Handle triggering the file input for import
     // ===========================================
-    $('#xof-import-btn').on('click', function(e) {
+    $('#xofac-import-btn').on('click', function(e) {
         e.preventDefault();
-        $('#xof-import-file').click(); 
+        $('#xofac-import-file').click(); 
     });
 
     // ==================================================================
     // Handle reading the selected JSON file and pushing it to the server
     // ==================================================================
-    $('#xof-import-file').on('change', function(e) {
+    $('#xofac-import-file').on('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
 
@@ -405,19 +404,19 @@ jQuery(document).ready(function($) {
         reader.onload = function(event) {
             const fileContent = event.target.result;
             
-            $.post(xofChalkboard.ajax_url, {
-                action: 'xof_import_snippets',
-                nonce: xofChalkboard.nonce,
+            $.post(xofacChalkboard.ajax_url, {
+                action: 'xofac_import_snippets',
+                nonce: xofacChalkboard.nonce,
                 import_data: fileContent
             }, function(response) {
                 if (response.success) {
                     location.reload(); 
                 } else {
-                    alert(xofChalkboard.i18n.errorImporting + response.data);
+                    alert(xofacChalkboard.i18n.errorImporting + response.data);
                 }
             });
             
-            $('#xof-import-file').val('');
+            $('#xofac-import-file').val('');
         };
         
         reader.readAsText(file);
@@ -427,11 +426,11 @@ jQuery(document).ready(function($) {
     // Prevent data loss during active editing
     // =======================================
     $(window).on('beforeunload', function(e) {
-        const isEditingText = $('.xof-chalkboard-save:visible').length > 0;
-        const isEditingTitle = $('.xof-snippet-title-edit-container:visible').length > 0;
+        const isEditingText = $('.xofac-chalkboard-save:visible').length > 0;
+        const isEditingTitle = $('.xofac-snippet-title-edit-container:visible').length > 0;
 
         if (isEditingText || isEditingTitle) {
-            const warningMessage = xofChalkboard.i18n.unsavedChanges;
+            const warningMessage = xofacChalkboard.i18n.unsavedChanges;
             e.preventDefault(); 
             e.returnValue = warningMessage; 
             return warningMessage;

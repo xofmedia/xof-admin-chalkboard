@@ -9,13 +9,6 @@
  * License:     GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: xof-admin-chalkboard
- * 
- * Copyright 2026 XOF Media
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
  */
 
 // Exit if accessed directly to prevent unauthorized code execution.
@@ -24,37 +17,37 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 // Register the Chalkboard Dashboard Widget
-function xof_add_chalkboard_widget() {
+function xofac_add_chalkboard_widget() {
     if ( current_user_can( 'manage_options' ) ) {
-        $title_html = '<img src="' . esc_url( plugin_dir_url( __FILE__ ) . 'images/xof-chalkboard-icon_64x.png' ) . '" alt="' . esc_attr__( 'XOF Chalkboard Logo', 'xof-admin-chalkboard' ) . '"> ' . esc_html__( 'XOF Chalkboard', 'xof-admin-chalkboard' );
+        $title_html = '<img src="' . esc_url( plugin_dir_url( __FILE__ ) . 'images/xofac_chalkboard-icon_64x.png' ) . '" alt="' . esc_attr__( 'XOF Chalkboard Logo', 'xof-admin-chalkboard' ) . '"> ' . esc_html__( 'XOF Chalkboard', 'xof-admin-chalkboard' );
         
         wp_add_dashboard_widget(
-            'xof_chalkboard_widget',
+            'xofac_chalkboard_widget',
             $title_html,
-            'xof_render_chalkboard_widget'
+            'xofac_render_chalkboard_widget'
         );
     }
 }
-add_action( 'wp_dashboard_setup', 'xof_add_chalkboard_widget' );
+add_action( 'wp_dashboard_setup', 'xofac_add_chalkboard_widget' );
 
  // Enqueue scripts and styles
-function xof_enqueue_chalkboard_assets( $hook ) {
+function xofac_enqueue_chalkboard_assets( $hook ) {
     if ( 'index.php' !== $hook ) {
         return; 
     }
 
     $css_file = plugin_dir_path( __FILE__ ) . 'css/xof-admin-chalkboard.css';
     $css_version = file_exists( $css_file ) ? filemtime( $css_file ) : '1.0.0';
-    wp_enqueue_style( 'xof-chalkboard-css', plugin_dir_url( __FILE__ ) . 'css/xof-admin-chalkboard.css', array(), $css_version );
+    wp_enqueue_style( 'xofac-chalkboard-css', plugin_dir_url( __FILE__ ) . 'css/xof-admin-chalkboard.css', array(), $css_version );
     
     $js_file = plugin_dir_path( __FILE__ ) . 'js/xof-admin-chalkboard.js';
     $js_version = file_exists( $js_file ) ? filemtime( $js_file ) : '1.0.0';
-    wp_enqueue_script( 'xof-chalkboard-js', plugin_dir_url( __FILE__ ) . 'js/xof-admin-chalkboard.js', array( 'jquery', 'jquery-ui-sortable' ), $js_version, true );
+    wp_enqueue_script( 'xofac-chalkboard-js', plugin_dir_url( __FILE__ ) . 'js/xof-admin-chalkboard.js', array( 'jquery', 'jquery-ui-sortable' ), $js_version, true );
 
     // The 'i18n' array
-    wp_localize_script( 'xof-chalkboard-js', 'xofChalkboard', array(
+    wp_localize_script( 'xofac-chalkboard-js', 'xofChalkboard', array(
         'ajax_url'   => admin_url( 'admin-ajax.php' ),
-        'nonce'      => wp_create_nonce( 'xof_chalkboard_nonce' ),
+        'nonce'      => wp_create_nonce( 'xofac_chalkboard_nonce' ),
         'plugin_url' => plugin_dir_url( __FILE__ ),
         'i18n'       => array(
             'errorAdding'      => __( 'Error adding snippet: ', 'xof-admin-chalkboard' ),
@@ -90,122 +83,122 @@ function xof_enqueue_chalkboard_assets( $hook ) {
         )
     ) );
 }
-add_action( 'admin_enqueue_scripts', 'xof_enqueue_chalkboard_assets' );
+add_action( 'admin_enqueue_scripts', 'xofac_enqueue_chalkboard_assets' );
 
 // ========================================
 // Render the HTML for the dashboard widget
 // ========================================
-function xof_render_chalkboard_widget() {
+function xofac_render_chalkboard_widget() {
     $user_id = get_current_user_id();
-    $snippets = get_user_meta( $user_id, 'xof_chalkboard_snippets', true );
+    $snippets = get_user_meta( $user_id, 'xofac_chalkboard_snippets', true );
     if ( ! is_array( $snippets ) ) {
         $snippets = array();
     }
 
     $img_url = plugin_dir_url( __FILE__ ) . 'images/';
 
-    echo '<div class="xof-chalkboard-container" id="xof-create-container">';
-    echo '  <input type="text" id="xof-chalkboard-title-input" placeholder="' . esc_attr__( 'Title your snippet...', 'xof-admin-chalkboard' ) . '" />';
-    echo '  <textarea id="xof-chalkboard-input" placeholder="' . esc_attr__( 'Paste your text, URL, or code snippet here...', 'xof-admin-chalkboard' ) . '"></textarea>';
+    echo '<div class="xofac-chalkboard-container" id="xofac-create-container">';
+    echo '  <input type="text" id="xofac-chalkboard-title-input" placeholder="' . esc_attr__( 'Title your snippet...', 'xof-admin-chalkboard' ) . '" />';
+    echo '  <textarea id="xofac-chalkboard-input" placeholder="' . esc_attr__( 'Paste your text, URL, or code snippet here...', 'xof-admin-chalkboard' ) . '"></textarea>';
     
-    echo '  <div class="xof-chalkboard-add-controls">';
-    echo '    <div class="xof-chalkboard-add-left">';
-    echo '      <button type="button" id="xof-chalkboard-add" class="button button-primary">' . esc_html__( 'Add Snippet', 'xof-admin-chalkboard' ) . '</button>';
-    echo '      <span id="xof-chalkboard-spinner" class="spinner"></span>';
+    echo '  <div class="xofac-chalkboard-add-controls">';
+    echo '    <div class="xofac-chalkboard-add-left">';
+    echo '      <button type="button" id="xofac-chalkboard-add" class="button button-primary">' . esc_html__( 'Add Snippet', 'xof-admin-chalkboard' ) . '</button>';
+    echo '      <span id="xofac-chalkboard-spinner" class="spinner"></span>';
     echo '    </div>';
-    echo '    <div class="xof-color-picker-container xof-create-color-picker">';
-    echo '      <input type="hidden" id="xof-chalkboard-color-input" value="#fcfcfc" />';
-    echo '      <img src="' . esc_url( $img_url . 'xof_chalkboard-rainbow-button_64x.png' ) . '" class="xof-action-icon xof-rainbow-btn" title="' . esc_attr__( 'Choose Color', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Choose Color', 'xof-admin-chalkboard' ) . '" />';
-    echo '      <span class="xof-color-label">' . esc_html__( 'Color', 'xof-admin-chalkboard' ) . '</span>';
-    echo '      <div class="xof-color-bar" style="display:none;">';
-    echo '        <div class="xof-color-swatch" data-color="#fcfcfc" style="background-color: #e0e0e0;" title="' . esc_attr__( 'Default', 'xof-admin-chalkboard' ) . '"></div>';
-    echo '        <div class="xof-color-swatch" data-color="#ffe5e5" style="background-color: #ff9999;" title="' . esc_attr__( 'Light Red', 'xof-admin-chalkboard' ) . '"></div>';
-    echo '        <div class="xof-color-swatch" data-color="#ffebd6" style="background-color: #ffb366;" title="' . esc_attr__( 'Light Orange', 'xof-admin-chalkboard' ) . '"></div>';
-    echo '        <div class="xof-color-swatch" data-color="#fffae6" style="background-color: #ffe680;" title="' . esc_attr__( 'Light Yellow', 'xof-admin-chalkboard' ) . '"></div>';
-    echo '        <div class="xof-color-swatch" data-color="#e8f5e9" style="background-color: #99cc99;" title="' . esc_attr__( 'Light Green', 'xof-admin-chalkboard' ) . '"></div>';
-    echo '        <div class="xof-color-swatch" data-color="#e3f2fd" style="background-color: #99c2ff;" title="' . esc_attr__( 'Light Blue', 'xof-admin-chalkboard' ) . '"></div>';
-    echo '        <div class="xof-color-swatch" data-color="#f3e5f5" style="background-color: #cc99ff;" title="' . esc_attr__( 'Light Purple', 'xof-admin-chalkboard' ) . '"></div>';
+    echo '    <div class="xofac-color-picker-container xofac-create-color-picker">';
+    echo '      <input type="hidden" id="xofac-chalkboard-color-input" value="#fcfcfc" />';
+    echo '      <img src="' . esc_url( $img_url . 'xofac_chalkboard-rainbow-button_64x.png' ) . '" class="xofac-action-icon xofac-rainbow-btn" title="' . esc_attr__( 'Choose Color', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Choose Color', 'xof-admin-chalkboard' ) . '" />';
+    echo '      <span class="xofac-color-label">' . esc_html__( 'Color', 'xof-admin-chalkboard' ) . '</span>';
+    echo '      <div class="xofac-color-bar" style="display:none;">';
+    echo '        <div class="xofac-color-swatch" data-color="#fcfcfc" style="background-color: #e0e0e0;" title="' . esc_attr__( 'Default', 'xof-admin-chalkboard' ) . '"></div>';
+    echo '        <div class="xofac-color-swatch" data-color="#ffe5e5" style="background-color: #ff9999;" title="' . esc_attr__( 'Light Red', 'xof-admin-chalkboard' ) . '"></div>';
+    echo '        <div class="xofac-color-swatch" data-color="#ffebd6" style="background-color: #ffb366;" title="' . esc_attr__( 'Light Orange', 'xof-admin-chalkboard' ) . '"></div>';
+    echo '        <div class="xofac-color-swatch" data-color="#fffae6" style="background-color: #ffe680;" title="' . esc_attr__( 'Light Yellow', 'xof-admin-chalkboard' ) . '"></div>';
+    echo '        <div class="xofac-color-swatch" data-color="#e8f5e9" style="background-color: #99cc99;" title="' . esc_attr__( 'Light Green', 'xof-admin-chalkboard' ) . '"></div>';
+    echo '        <div class="xofac-color-swatch" data-color="#e3f2fd" style="background-color: #99c2ff;" title="' . esc_attr__( 'Light Blue', 'xof-admin-chalkboard' ) . '"></div>';
+    echo '        <div class="xofac-color-swatch" data-color="#f3e5f5" style="background-color: #cc99ff;" title="' . esc_attr__( 'Light Purple', 'xof-admin-chalkboard' ) . '"></div>';
     echo '      </div>';
     echo '    </div>';
     echo '  </div>';
     echo '</div>';
 
-    echo '<div class="xof-import-export-container">';
-    echo '  <div class="xof-ie-action">';
-    echo '    <a href="#" id="xof-import-btn">' . esc_html__( 'Import', 'xof-admin-chalkboard' ) . '</a>';
-    echo '    <div class="xof-ie-tooltip">' . esc_html__( 'Import snippets from a JSON file.', 'xof-admin-chalkboard' ) . '</div>';
-    echo '    <input type="file" id="xof-import-file" accept=".json" style="display:none;" />';
+    echo '<div class="xofac-import-export-container">';
+    echo '  <div class="xofac-ie-action">';
+    echo '    <a href="#" id="xofac-import-btn">' . esc_html__( 'Import', 'xof-admin-chalkboard' ) . '</a>';
+    echo '    <div class="xofac-ie-tooltip">' . esc_html__( 'Import snippets from a JSON file.', 'xof-admin-chalkboard' ) . '</div>';
+    echo '    <input type="file" id="xofac-import-file" accept=".json" style="display:none;" />';
     echo '  </div>';
-    echo '  <span class="xof-ie-separator">|</span>';
-    echo '  <div class="xof-ie-action">';
-    echo '    <a href="#" id="xof-export-btn">' . esc_html__( 'Export', 'xof-admin-chalkboard' ) . '</a>';
-    echo '    <div class="xof-ie-tooltip">' . esc_html__( 'Export all snippets to a JSON file.', 'xof-admin-chalkboard' ) . '</div>';
+    echo '  <span class="xofac-ie-separator">|</span>';
+    echo '  <div class="xofac-ie-action">';
+    echo '    <a href="#" id="xofac-export-btn">' . esc_html__( 'Export', 'xof-admin-chalkboard' ) . '</a>';
+    echo '    <div class="xofac-ie-tooltip">' . esc_html__( 'Export all snippets to a JSON file.', 'xof-admin-chalkboard' ) . '</div>';
     echo '  </div>';
     echo '</div>';
 
-    echo '<hr class="xof-chalkboard-divider" />';
+    echo '<hr class="xofac-chalkboard-divider" />';
 
-    echo '<ul id="xof-chalkboard-list">';
+    echo '<ul id="xofac-chalkboard-list">';
     
     foreach ( array_reverse( $snippets ) as $snippet ) {
         $title = isset( $snippet['title'] ) ? $snippet['title'] : __( 'Snippet', 'xof-admin-chalkboard' );
         $color = isset( $snippet['color'] ) ? $snippet['color'] : '#fcfcfc';
         
-        echo '<li class="xof-chalkboard-item xof-is-collapsed" data-id="' . esc_attr( $snippet['id'] ) . '" style="background-color: ' . esc_attr( $color ) . ';">';
-        echo '  <div class="xof-snippet-body">';
-        echo '    <div class="xof-snippet-title-wrapper">';
-        echo '      <div class="xof-snippet-title-bar">';
-        echo '        <div class="xof-title-toggle-wrap" title="' . esc_attr__( 'Click to Expand/Collapse', 'xof-admin-chalkboard' ) . '">';
-        echo '          <span class="xof-accordion-toggle"></span>';
-        echo '          <span class="xof-title-text" style="color: #ffffff;">' . esc_html( $title ) . '</span>';
+        echo '<li class="xofac-chalkboard-item xofac-is-collapsed" data-id="' . esc_attr( $snippet['id'] ) . '" style="background-color: ' . esc_attr( $color ) . ';">';
+        echo '  <div class="xofac-snippet-body">';
+        echo '    <div class="xofac-snippet-title-wrapper">';
+        echo '      <div class="xofac-snippet-title-bar">';
+        echo '        <div class="xofac-title-toggle-wrap" title="' . esc_attr__( 'Click to Expand/Collapse', 'xof-admin-chalkboard' ) . '">';
+        echo '          <span class="xofac-accordion-toggle"></span>';
+        echo '          <span class="xofac-title-text" style="color: #ffffff;">' . esc_html( $title ) . '</span>';
         echo '        </div>';
-        echo '        <img src="' . esc_url( $img_url . 'xof_chalkboard-title-edit-button_64x.png' ) . '" class="xof-title-edit-icon" title="' . esc_attr__( 'Edit Title', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Edit Title', 'xof-admin-chalkboard' ) . '" />';
+        echo '        <img src="' . esc_url( $img_url . 'xofac_chalkboard-title-edit-button_64x.png' ) . '" class="xofac-title-edit-icon" title="' . esc_attr__( 'Edit Title', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Edit Title', 'xof-admin-chalkboard' ) . '" />';
         echo '      </div>';
-        echo '      <div class="xof-snippet-title-edit-container" style="display:none;">';
-        echo '        <input type="text" class="xof-snippet-title-edit-input" value="' . esc_attr( $title ) . '" />';
-        echo '        <button type="button" class="button button-small xof-title-save">' . esc_html__( 'Save', 'xof-admin-chalkboard' ) . '</button>';
+        echo '      <div class="xofac-snippet-title-edit-container" style="display:none;">';
+        echo '        <input type="text" class="xofac-snippet-title-edit-input" value="' . esc_attr( $title ) . '" />';
+        echo '        <button type="button" class="button button-small xofac-title-save">' . esc_html__( 'Save', 'xof-admin-chalkboard' ) . '</button>';
         echo '      </div>';
         echo '    </div>';
 
-        echo '    <div class="xof-snippet-collapse-wrap" style="display:none;">';
-        echo '      <div class="xof-snippet-actions-horizontal">';
-        echo '        <img src="' . esc_url( $img_url . 'xof_chalkboard-copy-button_64x.png' ) . '" class="xof-action-icon xof-chalkboard-copy" title="' . esc_attr__( 'Copy Snippet', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Copy Snippet', 'xof-admin-chalkboard' ) . '" />';
-        echo '        <img src="' . esc_url( $img_url . 'xof_chalkboard-edit2-button_64x.png' ) . '" class="xof-action-icon xof-chalkboard-edit" title="' . esc_attr__( 'Edit Snippet', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Edit Snippet', 'xof-admin-chalkboard' ) . '" />';
+        echo '    <div class="xofac-snippet-collapse-wrap" style="display:none;">';
+        echo '      <div class="xofac-snippet-actions-horizontal">';
+        echo '        <img src="' . esc_url( $img_url . 'xofac_chalkboard-copy-button_64x.png' ) . '" class="xofac-action-icon xofac-chalkboard-copy" title="' . esc_attr__( 'Copy Snippet', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Copy Snippet', 'xof-admin-chalkboard' ) . '" />';
+        echo '        <img src="' . esc_url( $img_url . 'xofac_chalkboard-edit2-button_64x.png' ) . '" class="xofac-action-icon xofac-chalkboard-edit" title="' . esc_attr__( 'Edit Snippet', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Edit Snippet', 'xof-admin-chalkboard' ) . '" />';
         echo '      </div>';
-        echo '      <div class="xof-snippet-content">' . nl2br( esc_html( $snippet['text'] ) ) . '</div>';
-        echo '      <textarea class="xof-snippet-edit-input" style="display:none;">' . esc_textarea( $snippet['text'] ) . '</textarea>';
+        echo '      <div class="xofac-snippet-content">' . nl2br( esc_html( $snippet['text'] ) ) . '</div>';
+        echo '      <textarea class="xofac-snippet-edit-input" style="display:none;">' . esc_textarea( $snippet['text'] ) . '</textarea>';
         
-        echo '      <div class="xof-snippet-save-wrap" style="display:none;">';
-        echo '        <button type="button" class="button button-primary button-small xof-chalkboard-save">' . esc_html__( 'Save Snippet', 'xof-admin-chalkboard' ) . '</button>';
+        echo '      <div class="xofac-snippet-save-wrap" style="display:none;">';
+        echo '        <button type="button" class="button button-primary button-small xofac-chalkboard-save">' . esc_html__( 'Save Snippet', 'xof-admin-chalkboard' ) . '</button>';
         echo '      </div>';
         
         echo '    </div>';
         echo '  </div>';
 
-        echo '  <div class="xof-snippet-order-controls">';
-        echo '    <div class="xof-order-controls-top">';
-        echo '      <div class="xof-standard-order-icons">';
-        echo '        <img src="' . esc_url( $img_url . 'xof_chalkboard-close2-button_64x.png' ) . '" class="xof-order-icon xof-chalkboard-delete" title="' . esc_attr__( 'Delete Snippet', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Delete Snippet', 'xof-admin-chalkboard' ) . '" />';
-        echo '        <img src="' . esc_url( $img_url . 'xof_chalkboard-drag-button_64x.png' ) . '" class="xof-order-icon xof-drag-handle" title="' . esc_attr__( 'Drag to Reorder', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Drag to Reorder', 'xof-admin-chalkboard' ) . '" />';
+        echo '  <div class="xofac-snippet-order-controls">';
+        echo '    <div class="xofac-order-controls-top">';
+        echo '      <div class="xofac-standard-order-icons">';
+        echo '        <img src="' . esc_url( $img_url . 'xofac_chalkboard-close2-button_64x.png' ) . '" class="xofac-order-icon xofac-chalkboard-delete" title="' . esc_attr__( 'Delete Snippet', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Delete Snippet', 'xof-admin-chalkboard' ) . '" />';
+        echo '        <img src="' . esc_url( $img_url . 'xofac_chalkboard-drag-button_64x.png' ) . '" class="xofac-order-icon xofac-drag-handle" title="' . esc_attr__( 'Drag to Reorder', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Drag to Reorder', 'xof-admin-chalkboard' ) . '" />';
         echo '      </div>';
-        echo '      <div class="xof-delete-confirm-tooltip" style="display:none;">';
+        echo '      <div class="xofac-delete-confirm-tooltip" style="display:none;">';
         echo '        <span>' . esc_html__( 'Delete?', 'xof-admin-chalkboard' ) . '</span>';
-        echo '        <button type="button" class="button button-small xof-confirm-delete-yes">' . esc_html__( 'Yes', 'xof-admin-chalkboard' ) . '</button>';
-        echo '        <button type="button" class="button button-small xof-confirm-delete-no">' . esc_html__( 'No', 'xof-admin-chalkboard' ) . '</button>';
+        echo '        <button type="button" class="button button-small xofac-confirm-delete-yes">' . esc_html__( 'Yes', 'xof-admin-chalkboard' ) . '</button>';
+        echo '        <button type="button" class="button button-small xofac-confirm-delete-no">' . esc_html__( 'No', 'xof-admin-chalkboard' ) . '</button>';
         echo '      </div>';
         echo '    </div>';
         
-        echo '    <div class="xof-color-picker-container xof-edit-color-picker" style="display:none;">';
-        echo '      <input type="hidden" class="xof-snippet-color-edit-input" value="' . esc_attr( $color ) . '" />';
-        echo '      <img src="' . esc_url( $img_url . 'xof_chalkboard-rainbow-button_64x.png' ) . '" class="xof-action-icon xof-rainbow-btn" title="' . esc_attr__( 'Choose Color', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Choose Color', 'xof-admin-chalkboard' ) . '" />';
-        echo '      <div class="xof-color-bar" style="display:none;">';
-        echo '        <div class="xof-color-swatch" data-color="#fcfcfc" style="background-color: #e0e0e0;" title="' . esc_attr__( 'Default', 'xof-admin-chalkboard' ) . '"></div>';
-        echo '        <div class="xof-color-swatch" data-color="#ffe5e5" style="background-color: #ff9999;" title="' . esc_attr__( 'Light Red', 'xof-admin-chalkboard' ) . '"></div>';
-        echo '        <div class="xof-color-swatch" data-color="#ffebd6" style="background-color: #ffb366;" title="' . esc_attr__( 'Light Orange', 'xof-admin-chalkboard' ) . '"></div>';
-        echo '        <div class="xof-color-swatch" data-color="#fffae6" style="background-color: #ffe680;" title="' . esc_attr__( 'Light Yellow', 'xof-admin-chalkboard' ) . '"></div>';
-        echo '        <div class="xof-color-swatch" data-color="#e8f5e9" style="background-color: #99cc99;" title="' . esc_attr__( 'Light Green', 'xof-admin-chalkboard' ) . '"></div>';
-        echo '        <div class="xof-color-swatch" data-color="#e3f2fd" style="background-color: #99c2ff;" title="' . esc_attr__( 'Light Blue', 'xof-admin-chalkboard' ) . '"></div>';
-        echo '        <div class="xof-color-swatch" data-color="#f3e5f5" style="background-color: #cc99ff;" title="' . esc_attr__( 'Light Purple', 'xof-admin-chalkboard' ) . '"></div>';
+        echo '    <div class="xofac-color-picker-container xofac-edit-color-picker" style="display:none;">';
+        echo '      <input type="hidden" class="xofac-snippet-color-edit-input" value="' . esc_attr( $color ) . '" />';
+        echo '      <img src="' . esc_url( $img_url . 'xofac_chalkboard-rainbow-button_64x.png' ) . '" class="xofac-action-icon xofac-rainbow-btn" title="' . esc_attr__( 'Choose Color', 'xof-admin-chalkboard' ) . '" alt="' . esc_attr__( 'Choose Color', 'xof-admin-chalkboard' ) . '" />';
+        echo '      <div class="xofac-color-bar" style="display:none;">';
+        echo '        <div class="xofac-color-swatch" data-color="#fcfcfc" style="background-color: #e0e0e0;" title="' . esc_attr__( 'Default', 'xof-admin-chalkboard' ) . '"></div>';
+        echo '        <div class="xofac-color-swatch" data-color="#ffe5e5" style="background-color: #ff9999;" title="' . esc_attr__( 'Light Red', 'xof-admin-chalkboard' ) . '"></div>';
+        echo '        <div class="xofac-color-swatch" data-color="#ffebd6" style="background-color: #ffb366;" title="' . esc_attr__( 'Light Orange', 'xof-admin-chalkboard' ) . '"></div>';
+        echo '        <div class="xofac-color-swatch" data-color="#fffae6" style="background-color: #ffe680;" title="' . esc_attr__( 'Light Yellow', 'xof-admin-chalkboard' ) . '"></div>';
+        echo '        <div class="xofac-color-swatch" data-color="#e8f5e9" style="background-color: #99cc99;" title="' . esc_attr__( 'Light Green', 'xof-admin-chalkboard' ) . '"></div>';
+        echo '        <div class="xofac-color-swatch" data-color="#e3f2fd" style="background-color: #99c2ff;" title="' . esc_attr__( 'Light Blue', 'xof-admin-chalkboard' ) . '"></div>';
+        echo '        <div class="xofac-color-swatch" data-color="#f3e5f5" style="background-color: #cc99ff;" title="' . esc_attr__( 'Light Purple', 'xof-admin-chalkboard' ) . '"></div>';
         echo '      </div>';
         echo '    </div>';
         echo '  </div>';
@@ -215,19 +208,19 @@ function xof_render_chalkboard_widget() {
     
     echo '</ul>';
 
-    echo '<div class="xof-widget-footer">';
-    echo '  <div class="xof-footer-brand">';
+    echo '<div class="xofac-widget-footer">';
+    echo '  <div class="xofac-footer-brand">';
     echo '    <a href="https://xofmedia.com" target="_blank" rel="noopener noreferrer">';
-    echo '      ' . esc_html__( 'Provided by', 'xof-admin-chalkboard' ) . ' <img src="' . esc_url( $img_url . 'xof-chalkboard-footer-logo_264x50.png' ) . '" alt="' . esc_attr__( 'XOF Media Logo', 'xof-admin-chalkboard' ) . '" />';
+    echo '      ' . esc_html__( 'Provided by', 'xof-admin-chalkboard' ) . ' <img src="' . esc_url( $img_url . 'xofac_chalkboard-footer-logo_264x50.png' ) . '" alt="' . esc_attr__( 'XOF Media Logo', 'xof-admin-chalkboard' ) . '" />';
     echo '    </a>';
-    echo '    <div class="xof-brand-tooltip">' . esc_html__( 'Provided by XOFmedia.com', 'xof-admin-chalkboard' ) . '</div>';
+    echo '    <div class="xofac-brand-tooltip">' . esc_html__( 'Provided by XOFmedia.com', 'xof-admin-chalkboard' ) . '</div>';
     echo '  </div>';
     
-    echo '  <div class="xof-footer-donate">';
+    echo '  <div class="xofac-footer-donate">';
     echo '    <a href="https://xofmedia.com/buy-me-a-coffee" target="_blank" rel="noopener noreferrer">';
-    echo '      <img src="' . esc_url( $img_url . 'xof_chalkboard-coffee_64x.png' ) . '" alt="' . esc_attr__( 'Buy me a coffee', 'xof-admin-chalkboard' ) . '" />';
+    echo '      <img src="' . esc_url( $img_url . 'xofac_chalkboard-coffee_64x.png' ) . '" alt="' . esc_attr__( 'Buy me a coffee', 'xof-admin-chalkboard' ) . '" />';
     echo '    </a>';
-    echo '    <div class="xof-donate-tooltip">' . esc_html__( 'If you appreciate my work and it\'s helped you out in some way, consider buying me a coffee.', 'xof-admin-chalkboard' ) . '</div>';
+    echo '    <div class="xofac-donate-tooltip">' . esc_html__( 'If you appreciate my work and it\'s helped you out in some way, consider buying me a coffee.', 'xof-admin-chalkboard' ) . '</div>';
     echo '  </div>';
     echo '</div>';
 }
@@ -235,17 +228,16 @@ function xof_render_chalkboard_widget() {
 // ===============================
 // AJAX Handler: Add a new snippet
 // ===============================
-function xof_ajax_add_snippet() {
+function xofac_ajax_add_snippet() {
     // Security check
-    check_ajax_referer( 'xof_chalkboard_nonce', 'nonce' );
+    check_ajax_referer( 'xofac_chalkboard_nonce', 'nonce' );
     if ( ! current_user_can( 'manage_options' ) ) {
         wp_send_json_error( __( 'Permission denied.', 'xof-admin-chalkboard' ) );
     }
 
     if ( current_user_can( 'unfiltered_html' ) ) {
-        // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Explicitly allowing raw HTML/PHP code snippets for admins.
         $raw_text = isset( $_POST['text'] ) ? wp_unslash( $_POST['text'] ) : '';
-        // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     } else {
         $raw_text = isset( $_POST['text'] ) ? wp_kses_post( wp_unslash( $_POST['text'] ) ) : '';
     }
@@ -258,7 +250,7 @@ function xof_ajax_add_snippet() {
     }
 
     $user_id = get_current_user_id();
-    $snippets = get_user_meta( $user_id, 'xof_chalkboard_snippets', true );
+    $snippets = get_user_meta( $user_id, 'xofac_chalkboard_snippets', true );
     if ( ! is_array( $snippets ) ) {
         $snippets = array();
     }
@@ -266,8 +258,7 @@ function xof_ajax_add_snippet() {
     if ( empty( trim( $raw_title ) ) ) {
         $count = count( $snippets ) + 1;
         /* translators: %d: Snippet number */
-        $default_title = esc_html__( 'Snippet %d', 'xof-admin-chalkboard' );
-        $raw_title = sprintf( $default_title, $count );
+        $raw_title = sprintf( esc_html__( 'Snippet %d', 'xof-admin-chalkboard' ), $count );
     }
 
     $new_snippet = array(
@@ -278,7 +269,7 @@ function xof_ajax_add_snippet() {
     );
 
     $snippets[] = $new_snippet;
-    update_user_meta( $user_id, 'xof_chalkboard_snippets', $snippets );
+    update_user_meta( $user_id, 'xofac_chalkboard_snippets', $snippets );
 
     wp_send_json_success( array(
         'id'         => $new_snippet['id'],
@@ -289,14 +280,14 @@ function xof_ajax_add_snippet() {
         'color'      => $new_snippet['color']
     ) );
 }
-add_action( 'wp_ajax_xof_add_snippet', 'xof_ajax_add_snippet' );
+add_action( 'wp_ajax_xofac_add_snippet', 'xofac_ajax_add_snippet' );
 
 // ==============================
 // AJAX Handler: Delete a snippet
 // ==============================
-function xof_ajax_delete_snippet() {
+function xofac_ajax_delete_snippet() {
     // Security check
-    check_ajax_referer( 'xof_chalkboard_nonce', 'nonce' );
+    check_ajax_referer( 'xofac_chalkboard_nonce', 'nonce' );
     if ( ! current_user_can( 'manage_options' ) ) {
         wp_send_json_error( __( 'Permission denied.', 'xof-admin-chalkboard' ) );
     }
@@ -307,26 +298,26 @@ function xof_ajax_delete_snippet() {
     }
 
     $user_id = get_current_user_id();
-    $snippets = get_user_meta( $user_id, 'xof_chalkboard_snippets', true );
+    $snippets = get_user_meta( $user_id, 'xofac_chalkboard_snippets', true );
     
     if ( is_array( $snippets ) ) {
         $updated_snippets = array_filter( $snippets, function( $snippet ) use ( $snippet_id ) {
             return $snippet['id'] !== $snippet_id;
         });
 
-        update_user_meta( $user_id, 'xof_chalkboard_snippets', array_values( $updated_snippets ) );
+        update_user_meta( $user_id, 'xofac_chalkboard_snippets', array_values( $updated_snippets ) );
     }
 
     wp_send_json_success();
 }
-add_action( 'wp_ajax_xof_delete_snippet', 'xof_ajax_delete_snippet' );
+add_action( 'wp_ajax_xofac_delete_snippet', 'xofac_ajax_delete_snippet' );
 
 // ======================================
 // AJAX Handler: Edit an existing snippet
 // ======================================
-function xof_ajax_edit_snippet() {
+function xofac_ajax_edit_snippet() {
     // Security check
-    check_ajax_referer( 'xof_chalkboard_nonce', 'nonce' );
+    check_ajax_referer( 'xofac_chalkboard_nonce', 'nonce' );
     if ( ! current_user_can( 'manage_options' ) ) {
         wp_send_json_error( __( 'Permission denied.', 'xof-admin-chalkboard' ) );
     }
@@ -334,9 +325,8 @@ function xof_ajax_edit_snippet() {
     $snippet_id = isset( $_POST['snippet_id'] ) ? sanitize_text_field( wp_unslash( $_POST['snippet_id'] ) ) : '';
     
     if ( current_user_can( 'unfiltered_html' ) ) {
-        // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Explicitly allowing raw HTML/PHP code snippets for admins.
         $raw_text = isset( $_POST['text'] ) ? wp_unslash( $_POST['text'] ) : '';
-        // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     } else {
         $raw_text = isset( $_POST['text'] ) ? wp_kses_post( wp_unslash( $_POST['text'] ) ) : '';
     }
@@ -349,7 +339,7 @@ function xof_ajax_edit_snippet() {
     }
 
     $user_id = get_current_user_id();
-    $snippets = get_user_meta( $user_id, 'xof_chalkboard_snippets', true );
+    $snippets = get_user_meta( $user_id, 'xofac_chalkboard_snippets', true );
     
     if ( is_array( $snippets ) ) {
         $updated_color = '#fcfcfc'; 
@@ -369,7 +359,7 @@ function xof_ajax_edit_snippet() {
             }
         }
 
-        update_user_meta( $user_id, 'xof_chalkboard_snippets', $snippets );
+        update_user_meta( $user_id, 'xofac_chalkboard_snippets', $snippets );
 
         wp_send_json_success( array(
             'title_html' => esc_html( $snippet['title'] ),
@@ -380,14 +370,14 @@ function xof_ajax_edit_snippet() {
         wp_send_json_error( __( 'Snippet not found.', 'xof-admin-chalkboard' ) );
     }
 }
-add_action( 'wp_ajax_xof_edit_snippet', 'xof_ajax_edit_snippet' );
+add_action( 'wp_ajax_xofac_edit_snippet', 'xofac_ajax_edit_snippet' );
 
 // =================================================
 // AJAX Handler: Reorder a snippet via drag and drop
 // =================================================
-function xof_ajax_reorder_snippet() {
+function xofac_ajax_reorder_snippet() {
     // Security check
-    check_ajax_referer( 'xof_chalkboard_nonce', 'nonce' );
+    check_ajax_referer( 'xofac_chalkboard_nonce', 'nonce' );
     if ( ! current_user_can( 'manage_options' ) ) {
         wp_send_json_error( __( 'Permission denied.', 'xof-admin-chalkboard' ) );
     }
@@ -399,7 +389,7 @@ function xof_ajax_reorder_snippet() {
     }
 
     $user_id = get_current_user_id();
-    $snippets = get_user_meta( $user_id, 'xof_chalkboard_snippets', true );
+    $snippets = get_user_meta( $user_id, 'xofac_chalkboard_snippets', true );
     
     if ( is_array( $snippets ) ) {
         $new_snippets_array = array();
@@ -415,48 +405,46 @@ function xof_ajax_reorder_snippet() {
         
         $new_snippets_array = array_reverse( $new_snippets_array );
 
-        update_user_meta( $user_id, 'xof_chalkboard_snippets', $new_snippets_array );
+        update_user_meta( $user_id, 'xofac_chalkboard_snippets', $new_snippets_array );
         wp_send_json_success();
     } else {
         wp_send_json_error( __( 'No snippets found.', 'xof-admin-chalkboard' ) );
     }
 }
-add_action( 'wp_ajax_xof_reorder_snippet', 'xof_ajax_reorder_snippet' );
+add_action( 'wp_ajax_xofac_reorder_snippet', 'xofac_ajax_reorder_snippet' );
 
 // ================================================
 // AJAX Handler: Export all snippets to a JSON File
 // ================================================
-function xof_ajax_export_snippets() {
+function xofac_ajax_export_snippets() {
     // Security check
-    check_ajax_referer( 'xof_chalkboard_nonce', 'nonce' );
+    check_ajax_referer( 'xofac_chalkboard_nonce', 'nonce' );
     if ( ! current_user_can( 'manage_options' ) ) {
         wp_send_json_error( __( 'Permission denied.', 'xof-admin-chalkboard' ) );
     }
 
     $user_id = get_current_user_id();
-    $snippets = get_user_meta( $user_id, 'xof_chalkboard_snippets', true );
+    $snippets = get_user_meta( $user_id, 'xofac_chalkboard_snippets', true );
     if ( ! is_array( $snippets ) ) {
         $snippets = array();
     }
 
     wp_send_json_success( wp_json_encode( $snippets ) );
 }
-add_action( 'wp_ajax_xof_export_snippets', 'xof_ajax_export_snippets' );
+add_action( 'wp_ajax_xofac_export_snippets', 'xofac_ajax_export_snippets' );
 
 // ==============================================
 // AJAX Handler: Import snippets from a JSON file
 // ==============================================
-function xof_ajax_import_snippets() {
+function xofac_ajax_import_snippets() {
     // Security check
-    check_ajax_referer( 'xof_chalkboard_nonce', 'nonce' );
+    check_ajax_referer( 'xofac_chalkboard_nonce', 'nonce' );
     if ( ! current_user_can( 'manage_options' ) ) {
         wp_send_json_error( __( 'Permission denied.', 'xof-admin-chalkboard' ) );
     }
 
-    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Expecting raw JSON data string.
     $imported_data = isset( $_POST['import_data'] ) ? wp_unslash( $_POST['import_data'] ) : '';
-    // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-    
     $imported_snippets = json_decode( $imported_data, true );
 
     if ( json_last_error() !== JSON_ERROR_NONE || ! is_array( $imported_snippets ) ) {
@@ -464,7 +452,7 @@ function xof_ajax_import_snippets() {
     }
 
     $user_id = get_current_user_id();
-    $existing_snippets = get_user_meta( $user_id, 'xof_chalkboard_snippets', true );
+    $existing_snippets = get_user_meta( $user_id, 'xofac_chalkboard_snippets', true );
     if ( ! is_array( $existing_snippets ) ) {
         $existing_snippets = array();
     }
@@ -488,7 +476,7 @@ function xof_ajax_import_snippets() {
         $existing_snippets[] = $new_snippet; 
     }
 
-    update_user_meta( $user_id, 'xof_chalkboard_snippets', $existing_snippets );
+    update_user_meta( $user_id, 'xofac_chalkboard_snippets', $existing_snippets );
     wp_send_json_success();
 }
-add_action( 'wp_ajax_xof_import_snippets', 'xof_ajax_import_snippets' );
+add_action( 'wp_ajax_xofac_import_snippets', 'xofac_ajax_import_snippets' );
