@@ -3,7 +3,7 @@
  * Plugin Name: XOF Admin Chalkboard
  * Plugin URI:  https://xofmedia.com/wordpress-plugins/xof-admin-chalkboard-widget-free/
  * Description: A helpful chalkboard dashboard widget for admin notes and snippets.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      XOF Media
  * Author URI:  https://xofmedia.com
  * License:     GPLv3
@@ -40,12 +40,12 @@ function xofac_enqueue_chalkboard_assets( $hook ) {
     $css_version = file_exists( $css_file ) ? filemtime( $css_file ) : '1.0.0';
     wp_enqueue_style( 'xofac-chalkboard-css', plugin_dir_url( __FILE__ ) . 'css/xof-admin-chalkboard.css', array(), $css_version );
     
-    $js_file = plugin_dir_path( __FILE__ ) . 'js/xof-admin-chalkboard.js';
+    $js_file = plugin_dir_path( __FILE__ ) . 'js/xof-admin-chalkboard.js';$js_file = plugin_dir_path( __FILE__ ) . 'js/xof-admin-chalkboard.js';
     $js_version = file_exists( $js_file ) ? filemtime( $js_file ) : '1.0.0';
     wp_enqueue_script( 'xofac-chalkboard-js', plugin_dir_url( __FILE__ ) . 'js/xof-admin-chalkboard.js', array( 'jquery', 'jquery-ui-sortable' ), $js_version, true );
 
     // The 'i18n' array
-    wp_localize_script( 'xofac-chalkboard-js', 'xofChalkboard', array(
+    wp_localize_script( 'xofac-chalkboard-js', 'xofacChalkboard', array(
         'ajax_url'   => admin_url( 'admin-ajax.php' ),
         'nonce'      => wp_create_nonce( 'xofac_chalkboard_nonce' ),
         'plugin_url' => plugin_dir_url( __FILE__ ),

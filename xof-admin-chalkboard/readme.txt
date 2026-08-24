@@ -2,8 +2,8 @@
 Contributors: xofmedia
 Tags: dashboard, notes, snippets, widget, admin
 Requires at least: 6.0
-Tested up to: 7.0
-Stable tag: 1.0.0
+Tested up to: 7.1
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -68,6 +68,11 @@ Click the "Screen Options" tab at the top right of your WordPress dashboard and 
 6. A clean, collapsed view of multiple saved snippets, showcasing the color-coding and compact accordion UI.
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed a JavaScript reference error preventing the snippet addition process from executing properly.
+* Added fallback error handling to UI saving events to prevent interface freezing.
+* Updated compatibility for WordPress 7.1.
 
 = 1.0.0 =
 * Initial release.
