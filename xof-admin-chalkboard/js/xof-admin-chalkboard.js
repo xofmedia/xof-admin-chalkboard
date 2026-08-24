@@ -111,6 +111,21 @@ jQuery(document).ready(function($) {
             } else {
                 alert(xofacChalkboard.i18n.errorAdding + response.data);
             }
+        }).fail(function(xhr, status, error) {
+            // If a 500 server error, network drop, or JavaScript exception occurs,
+            // this fail block catches it and properly resets the UI.
+            
+            // 1. Stop the loading spinner
+            $spinner.removeClass('is-active');
+            
+            // 2. Re-enable the "Add Snippet" button
+            $addButton.prop('disabled', false);
+            
+            // 3. Provide a fallback alert so the user isn't left guessing
+            alert('A critical error occurred while adding the snippet. Please check the console for details.');
+            
+            // 4. Log the specifics to the console for easier debugging
+            console.error('XOF Chalkboard AJAX Error:', status, error);
         });
     });
 
